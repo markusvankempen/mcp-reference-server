@@ -1,6 +1,6 @@
 # Admin and tool security
 
-This clone is **mcp-reference-server 1.0.0**. 22 tools, three auth modes, four scopes (`read`, `write`, `pii`, `admin`). Every setting change goes through one tool: `update_settings` (admin scope). The groups switch is one of those settings.
+This is **mcp-reference-server 1.0.0**. 22 tools, three auth modes, four scopes (`read`, `write`, `pii`, `admin`). Every setting change goes through one tool: `update_settings` (admin scope). The groups switch is one of those settings.
 
 `/admin` is how you operate the server. None of it is in the MCP spec — the spec says
 nothing about who is allowed to call a tool, so every server invents an answer. This is one.
@@ -52,7 +52,7 @@ stdio has no headers, so a local server reads the credential from its own enviro
 
 | Scope | Grants |
 |---|---|
-| `read` | `describe_server`, `get_schema`, `run_query` (tickets, customers, settings and the other schemas), `start_timer`, `stop_timer`, `push_timer`, `watch_system`, `generate_traffic` |
+| `read` | `describe_server`, `get_schema`, `run_query` (tickets, customers, settings and the other schemas), `start_timer`, `stop_timer`, `push_timer`, `watch_system`, `generate_traffic`, `run_test_job`, `draft_reply`, `list_workspace_roots` |
 | `write` | `create_ticket`, `add_comment`, `close_ticket`, `push_log` — and implies `read` |
 | `pii` | No tool needs it. `run_query` with `schema=customers` returns the real `phone` instead of `REDACTED`. Implies `read` |
 | `admin` | The 8 operating tools minus `generate_traffic` (`update_settings`, `set_mqtt`, `create_user`, `delete_user`, `issue_api_key`, `revoke_api_key`, `import_settings`), the `users`, `api_keys`, `trace`, `errors` and `counters` queries of `run_query`, and implies all of the above |
@@ -145,7 +145,7 @@ Access → **SEPs**, or with `update_settings` and a `seps` object (admin scope,
 { "seps": { "SEP-3313": false, "sampling": false } }
 ```
 
-A switch changes behaviour on the next request, so it is a way to test how a client copes with a
+A switch changes behavior on the next request, so it is a way to test how a client copes with a
 server that lacks a feature. It is not a security control: a SEP that is off removes a protocol
 feature, it does not change who may call what. Scopes, gates, locks and the rate limit are
 unchanged. The switches travel in the settings document, so `import_settings` restores them.

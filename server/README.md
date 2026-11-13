@@ -278,7 +278,7 @@ A plain timer has no clock running. A timer is a start time, an optional length 
 
 ### Events
 
-The server can announce what happens on it and push those events to a client that is listening. **Events are off by default.** Timer events switch themselves on when you call `push_timer` (no admin credential needed). Everything else is turned on with `update_settings` and `events.enabled=true` (admin), the `ANNOUNCE_EVENTS` environment variable at startup, or in the **Events** tab on `/admin` (it uses the connection set on Remote config) and in the Events panel on on `/clients/browser.html`.
+The server can announce what happens on it and push those events to a client that is listening. **Events are off by default.** Timer events switch themselves on when you call `push_timer` (no admin credential needed). Everything else is turned on with `update_settings` and `events.enabled=true` (admin), the `ANNOUNCE_EVENTS` environment variable at startup, or in the **Events** tab on `/admin` (it uses the connection set on Remote config) and in the Events panel on `/clients/browser.html`.
 
 | Tool | Scope | What it does |
 |---|---|---|
@@ -619,7 +619,7 @@ npm run http       # http://127.0.0.1:8787
 | `/admin` | Sign in (`demo` / `demo` on a laptop). **Access** is Security, Users, API keys, and Tool gates. **Records** is Tickets and Skills. **Operate** is Events, Remote, and Samples. |
 | `/log` | Tool counters, admin audit trail, call trace, error log. Admin only. |
 | `/tools` | One row per tool: group, when to use it, the scope in force now, a Try button, and the curl that calls it. Tabs for Groups, Skills, Tasks, and Test job run those extensions. Open [All tools](http://127.0.0.1:8787/tools#tools-all). |
-| `/help` | Guides. Tabs: Quick start, Walkthrough, Extensions (groups, skills, tasks), Security, Pages, and Tools. The Tools tab has a curl for every tool. Open [Extensions](http://127.0.0.1:8787/help#help-specs). |
+| `/help` | Guides. Tabs: Quick start, Walkthrough, Extensions (groups, skills, tasks, events), Security, Pages, and Tools. The Tools tab has a curl for every tool. Open [Extensions](http://127.0.0.1:8787/help#help-specs). |
 | `/clients/` | Copy-paste setup pages for Cursor, VS Code, Claude Desktop, Windsurf, a browser client, a chat page (Ollama, Qwen by default), the command line, and a settings page. |
 
 ![/health — HTML dashboard showing status, transport, tool count, auth mode, and raw JSON](../docs/assets/screenshots/health-html.png)

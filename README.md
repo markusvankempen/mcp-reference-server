@@ -1,6 +1,6 @@
 # MCP Reference Server — A Full-Stack MCP Demo
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue?style=for-the-badge)](https://github.com/markusvankempen/mcp-reference-server)
+[![npm](https://img.shields.io/npm/v/mcp-reference-server?style=for-the-badge&logo=npm&logoColor=white&label=npm)](https://www.npmjs.com/package/mcp-reference-server)
 [![MCP](https://img.shields.io/badge/MCP-modelcontextprotocol.io-5A29E4?style=for-the-badge)](https://modelcontextprotocol.io/)
 [![Protocol](https://img.shields.io/badge/protocol-2025--11--25-5A29E4?style=for-the-badge)](https://modelcontextprotocol.io/specification/2025-11-25)
 [![SEPs](https://img.shields.io/badge/SEP%20switches-15-orange?style=for-the-badge)](server/README.md#specifications-and-the-sep-control-plane)
@@ -19,7 +19,7 @@ A **reference MCP server** for the [Model Context Protocol](https://modelcontext
 | **MCP server** (**mcp-reference-server 1.0.0**) | [`server/`](server/README.md) |
 | **MCP specification and SEPs** | [modelcontextprotocol.io](https://modelcontextprotocol.io/) · [SEP process](https://modelcontextprotocol.io/community/sep-guidelines) |
 
-Personal open-source project. SEP behaviour here is a prototype for testing, not the specification; the specification at modelcontextprotocol.io is authoritative.
+Personal open-source project. SEP behavior here is a prototype for testing, not the specification; the specification at modelcontextprotocol.io is authoritative.
 
 ---
 
@@ -47,12 +47,12 @@ Most MCP examples stop at "here is a tool that returns a string." This one goes 
 | **Live observability** — `/log` page with counters, error log, call trace | See what the model is actually doing |
 | **Operate it over MCP** — settings (one `update_settings` patch), users, API keys and settings import are tools, settings export is `run_query schema=settings`, and most need the `admin` scope even when auth is `off` | The control plane is part of the server, not a side door |
 | **Three ways to operate one server** — `/admin` Remote config and the `mcp-reference-server` command line | Same steps, same Demo setup, checked against each other |
-| **Groups** (this clone, **mcp-reference-server 1.0.0**, not on npm yet) | Prototype of `io.modelcontextprotocol/groups`. A client that negotiates it gets `describe_server` and `get_schema` from `tools/list`, then `groups/list` and `groups/get`. Seven groups: query, tickets-write, admin, events, traffic, jobs, client. A client that does not negotiate still gets all 22 tools. [server/README.md](server/README.md#groups-prototype) |
-| **Skills** (SEP-2640, this clone) | `io.modelcontextprotocol/skills`. A skill is a workflow and files (`skills/list`, `skills/get`, `resources/read`), not a tool and not a scope. Built in: `work-an-open-ticket`, `open-a-ticket`, `read-the-queue`. Admins upload more. [server/README.md](server/README.md#skills) |
-| **Tasks** (SEP-2663, this clone) | `io.modelcontextprotocol/tasks`. `create_ticket` and `run_test_job` can return a flat task handle. Poll `tasks/get`, or open `tasks/stream` (SEP-2694, draft) and resume with `after`. After `ttlMs`, `tasks/get` is `-32602` with `data.status` `expired` until the retain window ends. `tasks/result` is not implemented. [server/README.md](server/README.md#tasks) |
-| **Events** (SEP-3415 draft, this clone) | `io.modelcontextprotocol/events`. `events/list` and `events/poll` read the same bus as `GET /sse`. `events/stream` is a short push. Webhook is not offered. [server/README.md](server/README.md#events-extension) |
-| **Sampling, roots, and progress** (this clone) | `draft_reply` calls `sampling/createMessage` and does not post the draft. `list_workspace_roots` calls `roots/list` and does not read the files. An open `run_test_job` sends `notifications/progress` when the request carries a `progressToken`. A one-shot call has no client to ask. [server/README.md](server/README.md#asking-the-connected-client) |
-| **Live SEP control plane** (`/admin#adm-seps`, this clone) | Toggle 15 MCP specifications & SEPs live (`2026-07-28 §2.1`, `SEP-1686`, `SEP-2640`, `SEP-2575`, `SEP-2567`, `SEP-2127`, `SEP-3415`, `SEP-3313`, `SEP-19`, `SEP-2636`, `SEP-1577`, `SEP-1036`, `SEP-1850`, `SEP-2549`, `SEP-2164`) to test client resilience and audit compliance. [server/README.md](server/README.md#specifications-and-the-sep-control-plane) lists what each switch changes |
+| **Groups** (**mcp-reference-server 1.0.0**) | Prototype of `io.modelcontextprotocol/groups`. A client that negotiates it gets `describe_server` and `get_schema` from `tools/list`, then `groups/list` and `groups/get`. Seven groups: query, tickets-write, admin, events, traffic, jobs, client. A client that does not negotiate still gets all 22 tools. [server/README.md](server/README.md#groups-prototype) |
+| **Skills** (SEP-2640) | `io.modelcontextprotocol/skills`. A skill is a workflow and files (`skills/list`, `skills/get`, `resources/read`), not a tool and not a scope. Built in: `work-an-open-ticket`, `open-a-ticket`, `read-the-queue`. Admins upload more. [server/README.md](server/README.md#skills) |
+| **Tasks** (SEP-2663) | `io.modelcontextprotocol/tasks`. `create_ticket` and `run_test_job` can return a flat task handle. Poll `tasks/get`, or open `tasks/stream` (SEP-2694, draft) and resume with `after`. After `ttlMs`, `tasks/get` is `-32602` with `data.status` `expired` until the retain window ends. `tasks/result` is not implemented. [server/README.md](server/README.md#tasks) |
+| **Events** (SEP-3415 draft) | `io.modelcontextprotocol/events`. `events/list` and `events/poll` read the same bus as `GET /sse`. `events/stream` is a short push. Webhook is not offered. [server/README.md](server/README.md#events-extension) |
+| **Sampling, roots, and progress** | `draft_reply` calls `sampling/createMessage` and does not post the draft. `list_workspace_roots` calls `roots/list` and does not read the files. An open `run_test_job` sends `notifications/progress` when the request carries a `progressToken`. A one-shot call has no client to ask. [server/README.md](server/README.md#asking-the-connected-client) |
+| **Live SEP control plane** (`/admin#adm-seps`) | Toggle 15 MCP specifications & SEPs live (`2026-07-28 §2.1`, `SEP-1686`, `SEP-2640`, `SEP-2575`, `SEP-2567`, `SEP-2127`, `SEP-3415`, `SEP-3313`, `SEP-19`, `SEP-2636`, `SEP-1577`, `SEP-1036`, `SEP-1850`, `SEP-2549`, `SEP-2164`) to test client resilience and audit compliance. [server/README.md](server/README.md#specifications-and-the-sep-control-plane) lists what each switch changes |
 
 ---
 
@@ -73,7 +73,7 @@ Then open in a browser:
 | http://127.0.0.1:8787/admin | Auth mode, API keys, tool gates, observability |
 | http://127.0.0.1:8787/log | Call counters, error log, full call trace |
 | http://127.0.0.1:8787/tools | Every tool, with its scope, a Try button, and the curl that calls it. Tabs for groups, skills, tasks, and the test job |
-| http://127.0.0.1:8787/help#help-specs | Reference for the groups, skills, and tasks extensions |
+| http://127.0.0.1:8787/help#help-specs | Reference for the groups, skills, tasks, and events extensions |
 
 ### From a terminal
 

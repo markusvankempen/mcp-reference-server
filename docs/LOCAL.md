@@ -51,7 +51,7 @@ MCP_MODE=http PORT=8787 node src/index.js
 | http://127.0.0.1:8787/test | Read-only smoke: schemas, `run_query`, seed tickets (`?write=1` needs admin sign-in) |
 | http://127.0.0.1:8787/admin | `demo` / `demo`. Access, Records, Operate |
 | http://127.0.0.1:8787/tools | Every tool, with its curl. Tabs for groups, skills, tasks, and the test job |
-| http://127.0.0.1:8787/help#help-specs | Reference for groups, skills, and tasks |
+| http://127.0.0.1:8787/help#help-specs | Reference for groups, skills, tasks, and events |
 | http://127.0.0.1:8787/sse | Local SSE (same path as Code Engine) |
 | http://127.0.0.1:8787/mcp | Streamable HTTP |
 

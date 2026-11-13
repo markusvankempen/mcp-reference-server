@@ -1,6 +1,6 @@
 # mcp-reference-server — End-to-End Demo Guide
 
-This document walks through every key feature of the MCP server using live `curl` commands against a locally running HTTP server at **http://127.0.0.1:8787**. It matches server **3.0.1** (19 tools). Demos 1, 3, 14, 15 and 16 were captured against that build; Demos 2 and 4–12 were captured against `1.7.1`, so version strings inside them may differ from what a current server prints. There are **16 demos** in all: Demo 13 is the one-command setup, Demo 14 is a stopwatch read through the schema, Demo 15 listens to the server's events, and Demo 16 sends the same events to an MQTT broker. Every output block was captured from a running server.
+This document walks through every key feature of the MCP server using live `curl` commands against a locally running HTTP server at **http://127.0.0.1:8787**. Its output was captured on earlier builds, so version strings and the tool count can differ from what server **1.0.0** (22 tools) prints. Demos 1, 3, 14, 15 and 16 were captured against `3.0.1` (19 tools); Demos 2 and 4–12 were captured against `1.7.1`, so version strings inside them may differ from what a current server prints. There are **16 demos** in all: Demo 13 is the one-command setup, Demo 14 is a stopwatch read through the schema, Demo 15 listens to the server's events, and Demo 16 sends the same events to an MQTT broker. Every output block was captured from a running server.
 
 ---
 
