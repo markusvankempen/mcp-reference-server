@@ -16,7 +16,7 @@ A **reference MCP server** for the [Model Context Protocol](https://modelcontext
 
 | | |
 |---|---|
-| **MCP server** (**mcp-reference-server 1.0.0**) | [`server/`](server/README.md) |
+| **MCP server** (**mcp-reference-server 1.0.2**) | [`server/`](server/README.md) |
 | **MCP specification and SEPs** | [modelcontextprotocol.io](https://modelcontextprotocol.io/) · [SEP process](https://modelcontextprotocol.io/community/sep-guidelines) |
 
 Personal open-source project. SEP behavior here is a prototype for testing, not the specification; the specification at modelcontextprotocol.io is authoritative.
@@ -47,7 +47,7 @@ Most MCP examples stop at "here is a tool that returns a string." This one goes 
 | **Live observability** — `/log` page with counters, error log, call trace | See what the model is actually doing |
 | **Operate it over MCP** — settings (one `update_settings` patch), users, API keys and settings import are tools, settings export is `run_query schema=settings`, and most need the `admin` scope even when auth is `off` | The control plane is part of the server, not a side door |
 | **Three ways to operate one server** — `/admin` Remote config and the `mcp-reference-server` command line | Same steps, same Demo setup, checked against each other |
-| **Groups** (**mcp-reference-server 1.0.0**) | Prototype of `io.modelcontextprotocol/groups`. A client that negotiates it gets `describe_server` and `get_schema` from `tools/list`, then `groups/list` and `groups/get`. Seven groups: query, tickets-write, admin, events, traffic, jobs, client. A client that does not negotiate still gets all 22 tools. [server/README.md](server/README.md#groups-prototype) |
+| **Groups** (**mcp-reference-server 1.0.2**) | Prototype of `io.modelcontextprotocol/groups`. A client that negotiates it gets `describe_server` and `get_schema` from `tools/list`, then `groups/list` and `groups/get`. Seven groups: query, tickets-write, admin, events, traffic, jobs, client. A client that does not negotiate still gets all 22 tools. [server/README.md](server/README.md#groups-prototype) |
 | **Skills** (SEP-2640) | `io.modelcontextprotocol/skills`. A skill is a workflow and files (`skills/list`, `skills/get`, `resources/read`), not a tool and not a scope. Built in: `work-an-open-ticket`, `open-a-ticket`, `read-the-queue`. Admins upload more. [server/README.md](server/README.md#skills) |
 | **Tasks** (SEP-2663) | `io.modelcontextprotocol/tasks`. `create_ticket` and `run_test_job` can return a flat task handle. Poll `tasks/get`, or open `tasks/stream` (SEP-2694, draft) and resume with `after`. After `ttlMs`, `tasks/get` is `-32602` with `data.status` `expired` until the retain window ends. `tasks/result` is not implemented. [server/README.md](server/README.md#tasks) |
 | **Events** (SEP-3415 draft) | `io.modelcontextprotocol/events`. `events/list` and `events/poll` read the same bus as `GET /sse`. `events/stream` is a short push. Webhook is not offered. [server/README.md](server/README.md#events-extension) |
@@ -207,7 +207,7 @@ mcp-reference-server/
 
 | Doc | What's in it |
 |---|---|
-| [docs/README.md](docs/README.md) | Index. Server **mcp-reference-server 1.0.0** |
+| [docs/README.md](docs/README.md) | Index. Server **mcp-reference-server 1.0.2** |
 | [docs/DEMO.md](docs/DEMO.md) | **End-to-end demo guide** — 16 live curl demos, every lesson, real captured output |
 | [docs/LOCAL.md](docs/LOCAL.md) | Local stdio + HTTP walkthrough |
 | [docs/ADMIN-AND-SECURITY.md](docs/ADMIN-AND-SECURITY.md) | Auth modes, API keys, tool gates, SEP switches |

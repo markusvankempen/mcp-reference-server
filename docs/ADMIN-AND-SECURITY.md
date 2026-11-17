@@ -1,6 +1,6 @@
 # Admin and tool security
 
-This is **mcp-reference-server 1.0.0**. 22 tools, three auth modes, four scopes (`read`, `write`, `pii`, `admin`). Every setting change goes through one tool: `update_settings` (admin scope). The groups switch is one of those settings.
+This is **mcp-reference-server 1.0.2**. 22 tools, three auth modes, four scopes (`read`, `write`, `pii`, `admin`). Every setting change goes through one tool: `update_settings` (admin scope). The groups switch is one of those settings.
 
 `/admin` is how you operate the server. None of it is in the MCP spec — the spec says
 nothing about who is allowed to call a tool, so every server invents an answer. This is one.

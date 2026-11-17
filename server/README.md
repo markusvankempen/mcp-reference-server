@@ -8,7 +8,7 @@
 [![GitHub](https://img.shields.io/badge/GitHub-mcp--reference--server-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/markusvankempen/mcp-reference-server)
 
 A **fully-featured reference MCP server** with a realistic support-desk sample data set, over the
-Model Context Protocol. This README describes server **1.0.0**, package **mcp-reference-server**.
+Model Context Protocol. This README describes server **1.0.2**, package **mcp-reference-server**.
 
 This build adds four extensions. **Groups** (`io.modelcontextprotocol/groups`) is a prototype of the Primitive Grouping draft. **Skills** (`io.modelcontextprotocol/skills`, SEP-2640) are workflows and files, not tools. **Tasks** (`io.modelcontextprotocol/tasks`, SEP-2663) let `create_ticket` and `run_test_job` return a handle the client polls. **Events** (`io.modelcontextprotocol/events`, SEP-3415, draft) let a client poll or briefly stream the same bus as `GET /sse`. The desk reference is [Docs → Extensions](http://127.0.0.1:8787/help#help-specs) while the server is running. The sections below are the same reference.
 
@@ -69,6 +69,22 @@ After negotiation, while groups are on:
 2. `describe_server` returns who you are, your scopes, the auth mode and the rate limit. Its `tools` array is that same pair. Each group row has a description and `via: "groups/get"`, and does not name the tools inside the group. `next` says to call `groups/get` with the group whose description matches the task.
 3. `groups/list` is metadata only (name, title, description, a scope hint). It needs no credential. The description is what the model uses to pick a group, so it names the tasks and does not name the tools.
 4. `groups/get` returns that group's instructions and the full tool definitions, including `inputSchema`. An unknown name is JSON-RPC `-32002`.
+
+   The result is flat, as in SEP-19: `instructions`, `tools`, `prompts`, `resources` and `groups` sit directly on the result, with no `contents` wrapper. `prompts` and `groups` are empty in this server (it has no nested groups), and `resources` holds the skill links for the group.
+
+   ```json
+   {
+     "instructions": "Use run_query for database lookups. ...",
+     "tools": [{ "name": "run_query", "description": "...", "inputSchema": { "type": "object" } }],
+     "prompts": [],
+     "resources": [],
+     "groups": [],
+     "ttlMs": 60000,
+     "cacheScope": "private"
+   }
+   ```
+
+   Releases 1.0.0 and 1.0.1 nested these under `contents`. From 1.0.2 they are at the top level. A client reads `result.tools`, not `result.contents.tools`.
 
 `tools/call` is unchanged. A tool left off `tools/list`, or a group left out of `groups/list`, is still authorized by its scope. Discovery is not access control. With groups off, `groups/list` and `groups/get` are refused and a negotiated `tools/list` returns the full catalog again. An empty group list would be the wrong off state: the client already negotiated, and it would be stuck with the two catalog tools.
 
@@ -598,7 +614,7 @@ npm run http       # http://127.0.0.1:8787
 | `npm run test:events` | Event streaming, including logging/setLevel on both transports: the kinds, who may receive what, `push_timer` and auto-timer, `push_log`, `update_settings` events, `watch_system`, `run_query` on `system` and `events`, `ANNOUNCE_EVENTS` at startup, real SSE and Streamable HTTP streams, the subscription test and the Events panel. 349 checks |
 | `npm run test:mqtt` | The MQTT bridge against a small broker written in the test: the packets, settings checks, topics and payloads, QoS 1, a broker that is late or says no, `set_mqtt`, export and import. 77 checks |
 | `npm run test:system` | The machine snapshot: host figures, a Docker cgroup limit, CPU percent, and the system watch. 17 checks |
-| `npm run test:groups` | The groups prototype: negotiation, `groups/list`, `groups/get`, an unknown group, a hidden tool that is still callable, omit, the audit trail, groups off, lab generate, and `/health`. 37 checks |
+| `npm run test:groups` | The groups prototype: negotiation, `groups/list`, `groups/get`, an unknown group, a hidden tool that is still callable, omit, the audit trail, groups off, lab generate, `/health`, and the flat `groups/get` shape. 62 checks |
 | `npm run test:skills` | SEP-2640: `skills/list`, `skills/get`, `resources/read`, `resources/directory/read`, digests, an unknown skill, the group links, and the curls on `/tools` and `/test`. 22 checks |
 | `npm run test:tasks` | SEP-2663: both task tools, the flat handle, `tasks/get`, `tasks/update`, `tasks/cancel`, the error codes, every `run_test_job` outcome, the expiry state, and the panels on `/tools`. 35 checks |
 | `npm run test:task-stream` | SEP-2694 draft: `tasks/stream` replays a `run_test_job`, resumes with `after`, refuses a second stream on the same connection, and returns `events_gone` when the cursor is older than the retained log. 11 checks |
@@ -942,7 +958,7 @@ While it is on, `/health`, `/tools`, `/test`, `/help` and `/clients` answer with
 ```json
 {
   "kind": "mcp-reference-server-settings",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "authMode": "write",
   "rateLimit": { "enabled": true, "limit": 60, "windowSeconds": 60 },
   "audit": false,
